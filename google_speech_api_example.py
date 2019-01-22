@@ -6,14 +6,14 @@ speech_file = 'resources/commercial_mono.wav'
 with open(speech_file, 'rb') as audio_file:
     content = audio_file.read()
 
-audio = speech.types.RecognitionAudio(content=content)
+audio = speech.types.RecognitionAudio(uri=content)
 
 config = speech.types.RecognitionConfig(
     encoding=speech.enums.RecognitionConfig.AudioEncoding.LINEAR16,
-    sample_rate_hertz=8000,
+    sample_rate_hertz=44100L,
     language_code='en-US',
     enable_speaker_diarization=True,
-    diarization_speaker_count=2)
+    diarization_speaker_count=3)
 
 print('Waiting for operation to complete...')
 response = client.recognize(config, audio)

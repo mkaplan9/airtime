@@ -10,6 +10,7 @@ from google.cloud.speech import types
 client = speech.SpeechClient()
 
 # The name of the audio file to transcribe
+path = "/Users/max/Downloads/EarthShake_short.flac"
 file_name = os.path.join(
     os.path.dirname(__file__),
     'resources',
@@ -21,12 +22,12 @@ with io.open(file_name, 'rb') as audio_file:
     audio = types.RecognitionAudio(content=content)
 
 config = types.RecognitionConfig(
-    encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
-    sample_rate_hertz=16000,
+    encoding=enums.RecognitionConfig.AudioEncoding.FLAC,
+    sample_rate_hertz=44100L,
     language_code='en-US')
 
 # Detects speech in the audio file
-response = client.recognize(config, audio)
+response = client.long_running_recognize(config, audio)
 
 for result in response.results:
     print('Transcript: {}'.format(result.alternatives[0].transcript))
